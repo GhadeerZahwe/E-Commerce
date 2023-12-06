@@ -8,7 +8,7 @@ include("connection.php");
 $username = $_POST['username'];
 $password = $_POST['password'];
 $email = $_POST['email'];
-$usertype_id = 4;  // Assuming 'normal user' based on your usertype table
+$usertype_id = $_POST['usertype_id'];  // Assuming 'usertype_id' is provided in the POST data
 
 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
