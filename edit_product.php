@@ -30,7 +30,7 @@ try {
 
     // Check if the user has permission to edit a product (user type id 1 for sellers)
     if ($decoded->usertype_id == 1) {
-        //use POST method to send data
+        // POST method used to send data
         $product_id = $_POST['product_id'];
         $name = $_POST['name'];
         $description = $_POST['description'];
