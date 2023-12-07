@@ -28,7 +28,7 @@ if (!$token) {
 
 try {
     $key = "your_secret";
-    $decoded = JWT::decode($token, $key, ['HS256']); 
+    $decoded = JWT::decode($token, new Key($key, 'HS256'));
 
     // Check if the user has permission to get orders
     // In this case, allow only admins (usertype_id = 2)
