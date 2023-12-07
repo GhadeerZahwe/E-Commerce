@@ -30,36 +30,41 @@ try {
     $key = "your_secret";
     $decoded = JWT::decode($token, $key, ['HS256']); 
 
-    // Check if the user has permission to get orders
-    // In this case, allow only admins (usertype_id = 2)
-    if ($decoded->usertype_id == 2) {
+    // Check if the user has permission to get order history
+    // Allow only customers (usertype_id = 3)
+    if ($decoded->usertype_id == 3) {
         // GET method to retrieve data
         $query = "
             SELECT
+                oh.history_id,
                 o.order_id,
                 o.order_date,
-                u.username AS customer_username,
                 p.name AS product_name,
                 oh.quantity
             FROM
-                orders o
-                JOIN users u ON o.user_id = u.user_id
-                JOIN order_history oh ON o.order_id = oh.order_id
+                order_history oh
+                JOIN orders o ON oh.order_id = o.order_id
                 JOIN products p ON oh.product_id = p.product_id
+            WHERE
+                o.user_id = ?
         ";
 
-        $result = $mysqli->query($query);
-        $orders = array();
+        $stmt = $mysqli->prepare($query);
+        $stmt->bind_param('i', $decoded->user_id);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $orderHistory = array();
 
         while ($row = $result->fetch_assoc()) {
-            $orders[] = $row;
+            $orderHistory[] = $row;
         }
 
         $response['status'] = 'success';
-        $response['orders'] = $orders;
+        $response['order_history'] = $orderHistory;
     } else {
         $response['status'] = 'error';
-        $response['message'] = 'Unauthorized. Only admins (usertype_id = 2) can get orders.';
+        $response['message'] = 'Unauthorized. Only customers (usertype_id = 3) can get order history.';
     }
 
     echo json_encode($response);
