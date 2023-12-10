@@ -16,3 +16,6 @@
   <li>GitHub repository containing the vanilla PHP backend with JWT implementation</li>
 </ul>
 
+### Submitted before the deadline:
+
+![image](https://github.com/GhadeerZahwe/E-Commerce/assets/88279980/097de2da-0c1a-49ce-9a53-f17f04cc5724)
