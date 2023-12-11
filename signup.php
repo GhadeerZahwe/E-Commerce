@@ -4,7 +4,7 @@ header('Content-Type: application/json');
 
 include("connection.php");
 
-// Assuming you're using POST method to send data
+// POST method to send data
 $username = $_POST['username'];
 $password = $_POST['password'];
 $email = $_POST['email'];
